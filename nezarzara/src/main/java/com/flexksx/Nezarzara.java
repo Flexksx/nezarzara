@@ -1,11 +1,16 @@
 package com.flexksx;
 
+import java.net.http.HttpRequest;
+
 import com.flexksx.commands.Command;
 import com.flexksx.commands.CommandFactory;
 import com.flexksx.commands.HelpCommand;
+import com.flexksx.http.HttpRequester;
 
 public class Nezarzara {
     public static void main(String[] args) {
+        HttpRequester.loadCacheFromFile();
+
         if (args.length == 0) {
             // no args => help
             new HelpCommand().run(args);
