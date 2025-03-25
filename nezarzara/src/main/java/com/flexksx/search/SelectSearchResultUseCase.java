@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
-import com.flexksx.domain.FetchByUriUseCase;
+import com.flexksx.fetch.FetchByUriUseCase;
 import com.flexksx.http.HttpRequester;
 
 /**

@@ -1,11 +1,7 @@
 package com.flexksx.commands;
 
-import com.flexksx.domain.FetchByUriUseCase;
+import com.flexksx.fetch.FetchByUriUseCase;
 
-/**
- * Fetches the content from a given URL and displays it in the terminal
- * in a more human-readable (Markdown-rendered) format.
- */
 public class UrlCommand implements Command {
 
     @Override
@@ -15,10 +11,8 @@ public class UrlCommand implements Command {
             return;
         }
 
-        // The first arg is the URL
         String url = args[0];
-        // Optionally, check if the user forgot "http://" or "https://" –
-        // but your code may already handle that
+
         if (!url.startsWith("http://") && !url.startsWith("https://")) {
             url = "https://" + url;
         }

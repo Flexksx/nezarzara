@@ -5,14 +5,33 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.SSLSocketFactory;
 
 import com.flexksx.url.ParsedUrl;
 import com.flexksx.url.UrlParser;
 
+/**
+ * Demonstrates in-memory caching directly in HttpRequester.
+ * For a more robust/disk-persistent cache, use a separate CacheManager.
+ */
 public class HttpRequester {
+
+    // Simple in-memory cache: URL -> CacheEntry
+    private static final Map<String, CacheEntry> cache = new ConcurrentHashMap<>();
+
+    private static final long CACHE_EXPIRY_MS = TimeUnit.MINUTES.toMillis(5);
+
     public static String fetch(String url) throws IOException {
+        CacheEntry entry = cache.get(url);
+        if (entry != null && !entry.isExpired()) {
+            System.out.println("CACHE HIT for " + url);
+            return entry.getBody();
+        }
+
         ParsedUrl parsedUrl = UrlParser.parseUrl(url);
 
         HttpRequest request = new HttpRequestBuilder()
@@ -46,6 +65,28 @@ public class HttpRequester {
         }
         socket.close();
 
-        return new String(byteArrayOutputStream.toByteArray());
+        String responseString = byteArrayOutputStream.toString();
+
+        cache.put(url, new CacheEntry(responseString, System.currentTimeMillis() + CACHE_EXPIRY_MS));
+
+        return responseString;
+    }
+
+    private static class CacheEntry {
+        private final String body;
+        private final long expiryTime;
+
+        public CacheEntry(String body, long expiryTime) {
+            this.body = body;
+            this.expiryTime = expiryTime;
+        }
+
+        public String getBody() {
+            return body;
+        }
+
+        public boolean isExpired() {
+            return System.currentTimeMillis() > expiryTime;
+        }
     }
 }

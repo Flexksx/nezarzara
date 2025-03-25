@@ -1,4 +1,4 @@
-package com.flexksx.domain;
+package com.flexksx.fetch;
 
 import com.flexksx.display.HtmlToMarkdownConvertor;
 import com.flexksx.display.MarkdownTerminalRenderer;
