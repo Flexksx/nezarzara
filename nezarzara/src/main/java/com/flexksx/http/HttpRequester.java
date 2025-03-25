@@ -22,6 +22,7 @@ public class HttpRequester {
                 .setPort(parsedUrl.getPort())
                 .addHeader("Accept", "text/html, application/json")
                 .addHeader("Connection", "close")
+                .addHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36")
                 .build();
 
         Socket socket;
