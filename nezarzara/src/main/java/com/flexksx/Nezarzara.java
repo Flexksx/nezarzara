@@ -1,6 +1,7 @@
 package com.flexksx;
 
-import com.flexksx.domain.SearchByUriAndPrintContentUseCase;
+import com.flexksx.domain.FetchByUriUseCase;
+import com.flexksx.domain.SearchByQueryUseCase;
 
 /**
  * Hello world!
@@ -8,7 +9,8 @@ import com.flexksx.domain.SearchByUriAndPrintContentUseCase;
  */
 public class Nezarzara {
     public static void main(String[] args) {
-        String uri = "https://999.md/ro";
-        SearchByUriAndPrintContentUseCase.execute(uri);
+        String query = "parrots";
+        // FetchByUriUseCase.execute(uri);
+        SearchByQueryUseCase.execute(query);
     }
 }

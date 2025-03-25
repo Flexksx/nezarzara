@@ -30,7 +30,6 @@ public class HtmlToPlainTextConverter {
             sb.append("Title: ").append(cleanText(titleMatcher.group(1))).append("\n\n");
         }
 
-        // Extract headings (h1 to h6) and add extra newlines.
         for (int i = 1; i <= 6; i++) {
             Pattern headingPattern = Pattern.compile("(?is)<h" + i + ".*?>(.*?)</h" + i + ">");
             Matcher headingMatcher = headingPattern.matcher(cleanedHtml);
@@ -39,22 +38,18 @@ public class HtmlToPlainTextConverter {
             }
         }
 
-        // Extract paragraphs.
         Pattern pPattern = Pattern.compile("(?is)<p.*?>(.*?)</p>");
         Matcher pMatcher = pPattern.matcher(cleanedHtml);
         while (pMatcher.find()) {
             sb.append(cleanText(pMatcher.group(1))).append("\n\n");
         }
 
-        // Extract list items and prefix with a bullet.
         Pattern liPattern = Pattern.compile("(?is)<li.*?>(.*?)</li>");
         Matcher liMatcher = liPattern.matcher(cleanedHtml);
         while (liMatcher.find()) {
             sb.append("• ").append(cleanText(liMatcher.group(1))).append("\n");
         }
 
-        // Fallback: if nothing substantial was extracted, remove all tags as a
-        // fallback.
         if (sb.length() < 50) {
             String fallback = cleanedHtml.replaceAll("(?is)<[^>]+>", " ");
             fallback = fallback.replaceAll("\\s+", " ").trim();
@@ -75,16 +70,16 @@ public class HtmlToPlainTextConverter {
         if (text == null || text.isEmpty()) {
             return "";
         }
-        // Remove any remaining HTML tags.
+
         text = text.replaceAll("(?is)<[^>]+>", " ");
-        // Decode a few common HTML entities.
+
         text = text.replace("&nbsp;", " ");
         text = text.replace("&amp;", "&");
         text = text.replace("&lt;", "<");
         text = text.replace("&gt;", ">");
         text = text.replace("&quot;", "\"");
         text = text.replace("&apos;", "'");
-        // Normalize whitespace.
+
         text = text.replaceAll("\\s+", " ").trim();
         return text;
     }
