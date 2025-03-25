@@ -36,15 +36,15 @@ public class HttpRequester {
         out.write(request.toString().getBytes());
         out.flush();
 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         InputStream in = socket.getInputStream();
         byte[] buffer = new byte[4096];
         int read;
         while ((read = in.read(buffer)) != -1) {
-            baos.write(buffer, 0, read);
+            byteArrayOutputStream.write(buffer, 0, read);
         }
         socket.close();
 
-        return new String(baos.toByteArray());
+        return new String(byteArrayOutputStream.toByteArray());
     }
 }
