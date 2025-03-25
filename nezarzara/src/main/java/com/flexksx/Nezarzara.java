@@ -1,7 +1,6 @@
 package com.flexksx;
 
-import com.flexksx.domain.SearchByUriUseCase;
-import com.flexksx.http.HttpRequester;
+import com.flexksx.domain.SearchByUriAndPrintContentUseCase;
 
 /**
  * Hello world!
@@ -10,6 +9,6 @@ import com.flexksx.http.HttpRequester;
 public class Nezarzara {
     public static void main(String[] args) {
         String uri = "https://999.md/ro";
-        System.out.println(SearchByUriUseCase.execute(uri));
+        SearchByUriAndPrintContentUseCase.execute(uri);
     }
 }

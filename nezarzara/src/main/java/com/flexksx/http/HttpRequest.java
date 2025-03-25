@@ -9,7 +9,6 @@ public class HttpRequest {
     private final int port;
     private final Map<String, String> headers;
 
-    // Private constructor – only the builder can create instances.
     HttpRequest(String method, String host, String path, int port, Map<String, String> headers) {
         this.method = method;
         this.host = host;

@@ -10,9 +10,9 @@ public class UrlParser {
         if (lowerUrl.startsWith("https://")) {
             useSSL = true;
             defaultPort = 443;
-            url = url.substring(8); // strip off "https://"
+            url = url.substring(8);
         } else if (lowerUrl.startsWith("http://")) {
-            url = url.substring(7); // strip off "http://"
+            url = url.substring(7);
         }
 
         String host;
