@@ -1,5 +1,6 @@
 package com.flexksx.commands;
 
+
 import com.flexksx.fetch.FetchByUriUseCase;
 
 public class UrlCommand implements Command {
@@ -10,9 +11,9 @@ public class UrlCommand implements Command {
             System.err.println("Error: No URL provided. Usage: go2web -u <URL>");
             return;
         }
-
         String url = args[0];
 
+        String url = args[0];
         if (!url.startsWith("http://") && !url.startsWith("https://")) {
             url = "https://" + url;
         }
