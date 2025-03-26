@@ -26,6 +26,7 @@ public class HttpRequester {
         if (cached != null)
             return cached;
         ParsedUrl parsed = UrlParser.parseUrl(url);
+
         HttpRequest request = new HttpRequestBuilder()
                 .setMethod("GET")
                 .setHost(parsed.getHost())
@@ -35,6 +36,7 @@ public class HttpRequester {
                 .addHeader("Connection", "close")
                 .addHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36")
                 .build();
+
         Socket socket;
         if (parsed.isUseSSL()) {
             SSLSocketFactory f = (SSLSocketFactory) SSLSocketFactory.getDefault();
@@ -42,6 +44,7 @@ public class HttpRequester {
         } else {
             socket = new Socket(parsed.getHost(), parsed.getPort());
         }
+
         OutputStream out = socket.getOutputStream();
         out.write(request.toString().getBytes());
         out.flush();
@@ -85,6 +88,8 @@ public class HttpRequester {
                             String p = parsed.isUseSSL() ? "https://" : "http://";
                             loc = p + parsed.getHost() + (loc.startsWith("/") ? "" : "/") + loc;
                         }
+
+                        System.out.println("Redirecting to " + loc);
                         return fetch(loc, redirectCount + 1);
                     }
                 }
