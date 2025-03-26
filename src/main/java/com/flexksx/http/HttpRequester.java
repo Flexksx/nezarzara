@@ -11,19 +11,14 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
-/**
- * Basic HTTP fetcher that uses a static CacheService.
- */
 public class HttpRequester {
 
     public static String fetch(String url) throws IOException {
-        // 1) Check the static cache
         String cached = CacheService.get(url);
         if (cached != null) {
             return cached;
         }
 
-        // 2) Not in cache => do raw socket
         ParsedUrl parsed = UrlParser.parseUrl(url);
         HttpRequest request = new HttpRequestBuilder()
                 .setMethod("GET")

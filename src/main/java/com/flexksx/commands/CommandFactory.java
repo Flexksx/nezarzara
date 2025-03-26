@@ -13,7 +13,6 @@ public class CommandFactory {
     }
 
     public static Command getCommand(String option) {
-        // fallback to help if we don't recognize the option
         return COMMANDS.getOrDefault(option, new HelpCommand());
     }
 }

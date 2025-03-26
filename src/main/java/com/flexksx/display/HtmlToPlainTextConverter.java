@@ -5,12 +5,6 @@ import java.util.regex.Pattern;
 
 public class HtmlToPlainTextConverter {
 
-    /**
-     * Converts HTML content into a plain-text, human-readable format.
-     *
-     * @param html the raw HTML content as a String.
-     * @return formatted plain text extracted from the HTML.
-     */
     public static String convert(String html) {
         if (html == null || html.isEmpty()) {
             return "";
@@ -59,13 +53,6 @@ public class HtmlToPlainTextConverter {
         return sb.toString().trim();
     }
 
-    /**
-     * Cleans a text snippet by removing any remaining HTML tags,
-     * decoding common HTML entities, and normalizing whitespace.
-     *
-     * @param text the text snippet to clean.
-     * @return a cleaned version of the text.
-     */
     private static String cleanText(String text) {
         if (text == null || text.isEmpty()) {
             return "";

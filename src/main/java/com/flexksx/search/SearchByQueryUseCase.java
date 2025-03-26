@@ -24,10 +24,6 @@ public class SearchByQueryUseCase {
     private List<SearchResult> extractSearchResults(String html) {
         List<SearchResult> results = new ArrayList<>();
 
-        // This regex captures:
-        // 1) The link URL in href="..."
-        // 2) The title inside the <a> tag
-        // 3) Optionally the snippet in <div class="result__snippet">...
         Pattern pattern = Pattern.compile(
                 "<a[^>]*class=\"result__a\"[^>]*href=\"([^\"]+)\"[^>]*>(.*?)</a>" +
                         "(?:.*?<div[^>]*class=\"result__snippet\"[^>]*>(.*?)</div>)?",

@@ -5,28 +5,17 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
-/**
- * A basic cache that stores String bodies by URL
- * and persists to disk.
- */
 public class CacheService {
 
-    private static final String CACHE_FILE = "go2web_cache.ser";
+    private static final String CACHE_FILE = "cache.ser";
     private static final long CACHE_EXPIRY_MS = TimeUnit.MINUTES.toMillis(5);
 
-    // A concurrent map that we'll load statically
     private static final Map<String, CacheEntry> CACHE_MAP = new ConcurrentHashMap<>();
 
-    // A static block to load at class load time:
     static {
         loadFromFile();
     }
 
-    /**
-     * Checks if the content is in the cache and not expired.
-     * 
-     * @return the body if valid, else null
-     */
     public static String get(String url) {
         CacheEntry entry = CACHE_MAP.get(url);
         if (entry == null || entry.isExpired()) {
@@ -36,18 +25,11 @@ public class CacheService {
         return entry.getBody();
     }
 
-    /**
-     * Stores the body for the given URL, with a set expiry time.
-     */
     public static void put(String url, String body) {
         long expiryTime = System.currentTimeMillis() + CACHE_EXPIRY_MS;
         CACHE_MAP.put(url, new CacheEntry(body, expiryTime));
     }
 
-    /**
-     * Saves the current cache to disk.
-     * Typically call once at program exit.
-     */
     public static void saveToFile() {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(CACHE_FILE))) {
             out.writeObject(CACHE_MAP);
@@ -57,9 +39,6 @@ public class CacheService {
         }
     }
 
-    /**
-     * Loads from disk into CACHE_MAP, removing expired.
-     */
     @SuppressWarnings("unchecked")
     private static void loadFromFile() {
         File file = new File(CACHE_FILE);
